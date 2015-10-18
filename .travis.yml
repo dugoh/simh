@@ -1,3 +1,7 @@
+addons:
+  apt:
+    packages:
+    - libpcap-dev
 script:
   - make vax
   - ls -l BIN
