@@ -1,3 +1,5 @@
+os:
+  - osx
 addons:
   apt:
     packages:
