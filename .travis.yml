@@ -5,5 +5,20 @@ addons:
     packages:
     - libpcap-dev
 script:
-  - make vax
-  - ls -l BIN
+  - make
+  - cd BIN
+  - strip *
+  - git init
+  - git config user.name "${USER}"
+  - git config user.email "${GHP_MAIL}"
+  - echo "<HTML><HEAD><TITLE>LINKS</TITLE></HEAD><BODY><ul>" >index.html
+  - for file in $(ls|grep -v index.html); do (printf '<li><a href="' ; printf "${file}" ; printf '">' ; printf "${file}" ; printf '</a></li>\n') >>index.html ; done
+  - echo "</ul></BODY></HTML>" >>index.html
+  - git add .
+  - git commit -m "Deploy to GitHub Pages"
+  - git push --force --quiet https://${GHP_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git master:gh-pages >/dev/null 2>&1
+env:
+  global:
+    - secure: "g4GuOyAaZ4x7ZCjT7hxVhPKbAYNOVGIxGlZG/T8oM+ShGNiAYC78gradx1LqsSdPHbvUfLDY21tjvRSbLH0PVZsKKBz/KCn4Jg9uhSF8f6i+K4i72lWJnyn38yXZeFuciJmznExz9ujro/0f0w+O99Ohf4BLofl8iRbB+PXvjpm3bnZSO7WMTxNrUYzmhQfdLK0iutdKzMyEVOswRx2+8n7fuEm4goiOjnInjTg81/V5t7Yi8w9AdaQlxyGhX1K2lZmZJMPjpa135PBbQ7ACbbUNVfRWoGZY3buWUH7zOrUl2QLxzwpvaMtVgyMRjDT2+MfCMMo3gWVqthIUAaVLazIKQWDaVUye0JVSWcCcXcXmeB4QpTvt+UIredXgGn/qyhzoLeGc61tLEI/Ev5fABj/+PP4TprYwFZbjpISe58XEBGpmcGSqTexiLNXnA9H86o/eHd8L0Nqg7GTKvxX0rd8rG2WZsDiqhRBMdoKqagCqdFxcdkbuKwkQCrW4HmhEvpYKJ5H+96KAzqle+mMXdVzY+Dd7rz0pYiXK8QO/qd1Nv6zatFvLu3Aain4tUhIjtTVmvpdpxZlFsHrBM8lswJAmg495j3r1mflQr7DjCcbVfPZAbp8bLRXNlWYcMVi0nE7nzh24GNrDxGtbsvg/wad1oT6ic+Hv8olkefG6/jY="
+    - secure: "HcXOdQ32yuoVzH7CnZ4b90YYuYnnSnAQN6Q51EMX8DWZkcnbuXXO3idyogeqMN/NZWXDHxsdbAoVQBGIh4jG4hN3PxJdDm5zk3D2ozGkyJVkp2WlnEOK0zpI+O01ARdfDhnG+ondTXBcl3il5pXhtUrqrXbGGTPOKoLzwVlAdij8cj9atU4FqWpW+TJRHZovhmM+dJ0fK/8q6p+rgHM8etVFb9ZqV+uuMJrXBBiMLWms9gy/SwEZLTvVjwvqRHkk835KjwPHyCWi1fJKG1UUJGJLUTLXLS+Lum0iLqEpCIw1jyl8s6L0XQ5WOoY1aWDLV/5J5I0k9mUf1K5CgZAv6qb+kwRWaW3jbEb+vRffzMwk23apd+kvpXTEmLbKFefT9VoPZ1Gy4y7PkKbm8C9Dg+MGr85e3UAXBac5t7dVF+J/x6RLEm6SYU2GOseHYgnjavQTw3o8ZtAYvvEdorbWBR5o2NbU6dXQjDNV7GdgGwP12x2dVVAAT5M+8QWV14oXdxXVFIQSXMAPkTueifDsKs1pkk2hkXeTgtWcvngawCLyOswPyHEt8CyWK5iXCzzq6Jea0dKGHEWHLIu/riLgSOdJ7OV9cAyUF3P46YHhdvUlfUN+W3DF2oVw07nByL89nugeptVUOULEXFAp9Pe2YoJBkmn0rhF6ugGmhROv8Y8="
+
