@@ -1,0 +1,3 @@
+script:
+  - make vax
+  ls -l BIN
